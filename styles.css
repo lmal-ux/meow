@@ -1,41 +1,61 @@
+:root {
+  --header-height: 60px;
+}
+html{
+  scroll-behavior: smooth;
+  user-select: none;
+}
 body {
+  background-color: black;
+  margin:0;
+}
+
+.hide {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  background-color:black;
+  min-height: var(--header-height);
+  width: 100%;
 }
 
 .header {
-  user-select: none;
-  opacity: 100%;
+  height: var(--header-height);
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  max-width: 100%;
+  opacity: 100%;
   background-color: #333;
   color: white;
-  text-align: center;
-  padding: 15px;
   z-index: 1000;
-  /*transition: top 0.3s ease-in-out*/
+  box-sizing: border-box;
 }
 
-.header h1{
-  font-size:20px;
-  margin: 0;
-  padding: 0;
+.header h3 {
+  text-align: center;
 }
+
 .content {
-  margin-top: none;
-  padding: 20px;
+  background-color: white;
+  color: black;
+  max-width: 100%;
+  padding:0 10px;
+}
+
+.content p {
+  margin-top:0;
+  padding-top: 20px;
+}
+
+.lol {
+  height: 5000px;
   background-color: white;
 }
 
 button {
-  user-select: none ;
-  background:none;
-  padding:none;
+  user-select: none;
+  background: none;
+  padding: 0;
   color: black;
-  border:none;
-}
-
+  border: none;
+} 

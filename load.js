@@ -1,34 +1,23 @@
-const header = document.querySelector(".header");
-const hideDiv = document.querySelector(".hide");
-
-let lastScrollY = window.scrollY;
-
-// Ensure `.hide` matches header height dynamically
-const setHideHeight = () => {
-  if (header && hideDiv) {
-    hideDiv.style.height = `${header.offsetHeight}px`;
-  }
-};
-
-const updateHeader = () => {
-  if (!header || !hideDiv) return;
+document.addEventListener("DOMContentLoaded", function() {
+  const header = document.querySelector(".header");
+  let lastScrollY = window.scrollY;
+  let headerHeight = header.offsetHeight;
+  let hiddenHeight = 0; // Tracks how much of the header is hidden
   
-  const hideRect = hideDiv.getBoundingClientRect();
-  let visibleHeight = Math.max(0, hideRect.bottom); // How much of `.hide` is visible
-  
-  const scrollDirection = window.scrollY > lastScrollY ? "down" : "up";
-  lastScrollY = window.scrollY;
-  
-  if (scrollDirection === "down") {
-    // Hide the header gradually as `.hide` disappears
-    header.style.transform = `translateY(${-Math.min(header.offsetHeight, header.offsetHeight - visibleHeight)}px)`;
-  } else {
-    // Show header back based on scroll up amount
-    header.style.transform = `translateY(0)`;
-  }
-};
-
-// Run once to set the `.hide` height correctly
-window.addEventListener("DOMContentLoaded", setHideHeight);
-window.addEventListener("resize", setHideHeight);
-window.addEventListener("scroll", updateHeader);
+  window.addEventListener("scroll", function() {
+    let currentScrollY = window.scrollY;
+    let scrollDelta = currentScrollY - lastScrollY; // Positive when scrolling down, negative when up
+    
+    if (scrollDelta > 0) {
+      // Scrolling Down → Hide Header
+      hiddenHeight = Math.min(hiddenHeight + scrollDelta, headerHeight);
+    } else {
+      // Scrolling Up → Show Header
+      hiddenHeight = Math.max(hiddenHeight + scrollDelta, 0);
+    }
+    
+    header.style.top = `-${hiddenHeight}px`;
+    
+    lastScrollY = currentScrollY;
+  });
+});
